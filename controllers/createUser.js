@@ -6,11 +6,12 @@ const jwt = require('jsonwebtoken');
 const JWT_TOKEN = 'aritraisop'
 
 const createUser = async (req, res) => {
+  let success = false
   try {
     //  if the user already exists 
     let user = await User.findOne({ email: req.body.email })
     if (user) {
-      return res.status(400).json({ "error": "sorry a user already exists with this email" })
+      return res.status(400).json({ success,"error": "sorry a user already exists with this email" })
     }
     // encrypting the password
     let salt = await bcrypt.genSalt(10);
@@ -29,10 +30,11 @@ const createUser = async (req, res) => {
       }
     }
     const token = jwt.sign(data,JWT_TOKEN)
-    return res.json({token});
+    success = true;
+    return res.json({success,token});
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("some error occured")
+    res.status(500).send({success, "error" : "internal server error"})
   }
 }
 module.exports = createUser
