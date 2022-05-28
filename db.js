@@ -6,4 +6,4 @@ const connectToMongo  = ()=>{
         console.log('connected to mongoose');
     })
 }
-module.exports = connectToMongo;
+module.exports = connectToMongo; 

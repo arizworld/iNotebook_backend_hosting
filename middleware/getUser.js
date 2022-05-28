@@ -10,6 +10,7 @@ const getUser = (req,res,next)=>{
     }
     try {
         const data = jwt.verify(token,JWT_TOKEN)
+        console.log(data);
         req.userId = data.user.id
     } catch (error) {
         return res.status(401).json({error : 'Internal Server'})

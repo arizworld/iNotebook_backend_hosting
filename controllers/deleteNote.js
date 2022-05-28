@@ -3,10 +3,12 @@ const Note = require("../models/Notes")
 const deleteNote = async (req,res)=>{
     try {
         // wheather the note exists 
-        let note = await Note.findOne({id: req.params.id})
+        let note = await Note.findById(req.params.id)
         if(!note){
             return res.status(200).send("not found")
         }
+        console.log(req.userId)
+        console.log(note.user.toString())
         // the user is same the owner of the notes
         if(note.user.toString() !== req.userId){
             return res.status(401).send("not allowed")

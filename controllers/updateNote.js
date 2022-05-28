@@ -4,11 +4,15 @@ const updateNote = async (req,res)=>{
     const {title,description,tag} = req.body
     try {
         // wheather the note exists 
-        let note = await Note.findOne({id: req.params.id})
+        console.log(req.params.id)
+        let note = await Note.findById(req.params.id)
         if(!note){
             return res.status(200).send("not found")
         }
+        console.log(note)
         // the user is same the owner of the notes
+        console.log(req.userId)
+        console.log(note.user.toString())
         if(note.user.toString() !== req.userId){
             return res.status(401).send("not allowed")
         }
